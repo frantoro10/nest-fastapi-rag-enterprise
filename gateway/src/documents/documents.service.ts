@@ -45,7 +45,7 @@ export class DocumentsService {
       // Save metadata in the database (PostgreSQL) -- Guardar metadata en la base de datos.
       const newDoc = this.documentRepository.create({
         content: file.originalname, // Original name
-        filePath: filePath, // Bucket route - Ruta en el bucket del storage
+        filePath: filePath, // Bucket rout  e - Ruta en el bucket del storage
         metadata: { size: file.size, type: file.mimetype }
       });
 
