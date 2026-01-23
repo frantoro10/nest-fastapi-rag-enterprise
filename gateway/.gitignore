@@ -3,6 +3,9 @@
 /node_modules
 /build
 
+# pnpm store (should not be in project)
+/220
+
 # Logs
 logs
 *.log

@@ -24,11 +24,13 @@ export class DocumentsService {
   // Methods
 
   // Se usa Multer como Middleware que facilita: recibir, procesar, almacenar archivos (pdfs, etc.) manejando la carga multipart/form-data.
-  async uploadFile(file: Express.Multer.File) {
+  async uploadFile(file: Express.Multer.File, userId: string) {
     try {
+
       // Create a unique name to avoid rewrite- Crear un nombre único para el archivo (para evitar sobreescribir) Ej: 1723123123-manual.pdf 
       const fileName = `${Date.now()}-${file.originalname}`;
 
+      // Upload to Supabase - Subida a Supabasep
       const { data, error } = await this.supabase.storage
         .from('pdfs') // Bucket name - Storage
         .upload(fileName, file.buffer, {
@@ -46,6 +48,7 @@ export class DocumentsService {
       const newDoc = this.documentRepository.create({
         content: file.originalname, // Original name
         filePath: filePath, // Bucket rout  e - Ruta en el bucket del storage
+        ownerId: userId,
         metadata: { size: file.size, type: file.mimetype }
       });
 
