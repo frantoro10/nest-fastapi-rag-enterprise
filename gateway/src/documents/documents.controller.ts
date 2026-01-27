@@ -7,6 +7,8 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class DocumentsController {
   constructor(private readonly documentsService: DocumentsService) { }
 
+
+  // El FileInterceptor('file') es el puente que conecta NestJS con Multer. Le dice al framework: "Antes de ejecutar el método uploadFile, extrae el archivo que viene en el campo llamado 'file' de la petición HTTP y procésalo con Multer"
   @Post('upload')
   @UseGuards(JwtAuthGuard) // Protegemos la ruta, si no hay token, da error 401
   @UseInterceptors(FileInterceptor('file'))
