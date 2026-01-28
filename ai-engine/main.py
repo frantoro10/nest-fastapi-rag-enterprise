@@ -18,7 +18,7 @@ load_dotenv()
 
 #Setup client Redis - Usign async version is used to avoid blocking the main fastapi thread
 redis = aioredis.from_url(
-    host = os.getenv("REDIS_URL"),
+    os.getenv("REDIS_URL"),
     decode_responses=True
 )
 
@@ -55,7 +55,7 @@ async def lifespan(app: FastAPI):
     asyncio.create_task(listen_to_redis())
     yield
     logger.info("Closing conections..")
-    await redis_close()
+    await redis.close()
 
 app = FastAPI(lifespan=lifespan)
 
