@@ -33,7 +33,7 @@ async def listen_to_redis():
     Uses BLPOP with timeout=0 to block until a message is available, ensuring efficient resource usage for real-time processing.
     """
 
-    logger.info("AI Worker started. LListen 'upload_queue' on Upstash")
+    logger.info("AI Worker started. Listen 'upload_queue' on Upstash")
     while True:
         try:
             message = await redis.blpop("upload_queue", timeout=0)
