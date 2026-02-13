@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { DocumentsModule } from './documents/documents.module';
 import { AuthModule } from './auth/auth.module';
 import { RedisModule } from './redis/redis.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -32,10 +33,9 @@ import { RedisModule } from './redis/redis.module';
     DocumentsModule,
     AuthModule,
     RedisModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
-
-

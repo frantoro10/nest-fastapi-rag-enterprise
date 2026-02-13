@@ -1,12 +1,22 @@
-import { Controller, Post, Get, UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, UseGuards, Request } from '@nestjs/common'
+import {
+  Controller,
+  Post,
+  Get,
+  UseInterceptors,
+  UploadedFile,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { DocumentsService } from './documents.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('documents')
 export class DocumentsController {
-  constructor(private readonly documentsService: DocumentsService) { }
-
+  constructor(private readonly documentsService: DocumentsService) {}
 
   // El FileInterceptor('file') es el puente que conecta NestJS con Multer. Le dice al framework: "Antes de ejecutar el método uploadFile, extrae el archivo que viene en el campo llamado 'file' de la petición HTTP y procésalo con Multer"
   @Post('upload')
@@ -18,7 +28,7 @@ export class DocumentsController {
         validators: [
           // Validating max 5mb and pdf type
           new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 5 }),
-          new FileTypeValidator({ fileType: 'application/pdf' })
+          new FileTypeValidator({ fileType: 'application/pdf' }),
         ],
       }),
     )
@@ -35,6 +45,4 @@ export class DocumentsController {
   findAll() {
     return this.documentsService.findAll();
   }
-
-
 }

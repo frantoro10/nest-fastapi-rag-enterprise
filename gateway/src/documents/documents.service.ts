@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RedisService } from 'src/redis/redis.service';
 import { Repository } from 'typeorm';
@@ -17,7 +21,7 @@ export class DocumentsService {
     private documentRepository: Repository<Document>, //Repository allows to make SQL queries - Repository de typeor permite hacer las queries de SQL facilmente.
     private configService: ConfigService,
     private readonly redisService: RedisService,
-    ) {
+  ) {
     this.supabase = createClient(
       this.configService.get<string>('SUPABASE_URL') ?? '',
       this.configService.get<string>('SUPABASE_KEY') ?? '',
@@ -55,7 +59,7 @@ export class DocumentsService {
         content: file.originalname,
         filePath: filePath,
         ownerId: userId,
-        metadata: { size: file.size, type: file.mimetype }
+        metadata: { size: file.size, type: file.mimetype },
       });
 
       const savedDoc = await this.documentRepository.save(newDoc);
@@ -63,22 +67,21 @@ export class DocumentsService {
       // 3. Dispatch asynchronous job to the Redis Queue
       // We construct a lightweight payload with only the necessary references for the Python consumer.
       const payload = {
-        documentId: savedDoc.id,   
-        filePath: savedDoc.filePath, 
-        userId: userId            
+        documentId: savedDoc.id,
+        filePath: savedDoc.filePath,
+        userId: userId,
       };
 
       await this.redisService.addJobToQueue(this.QUEUE_NAME, payload);
-      
+
       this.logger.log(`Document ${savedDoc.id} queued for processing.`);
 
       // 4. Return immediate feedback to the client
       // The user is notified that the upload was successful, even though processing continues in the background.
       return {
         message: 'File uploaded successfully. AI processing started.',
-        document: savedDoc
+        document: savedDoc,
       };
-
     } catch (error) {
       this.logger.error(`Upload flow failed: ${error.message}`, error.stack);
       throw new InternalServerErrorException('The file could not be processed');
@@ -86,8 +89,6 @@ export class DocumentsService {
   }
 
   findAll(): Promise<Document[]> {
-    return this.documentRepository.find()
+    return this.documentRepository.find();
   }
-
 }
-
