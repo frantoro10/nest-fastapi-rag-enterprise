@@ -49,6 +49,15 @@ graph TD
 
 ```
 
-The logic is finished; it is just necessary to deploy the servers (Nest and Python). You can test the RAG system using Postman or other similar tools to use the endpoints! 
+## Status: Core Backend Complete
+This repository showcases the complete backend architecture for a Corporate RAG (Retrieval-Augmented Generation) system.
 
-You can find all the info of the key in the .env-sample! 
+Designed with an API-First approach, the core logic is fully decoupled and functional, featuring:
+
+Asynchronous document ingestion via Redis.
+
+Vector processing and semantic search via FastAPI & LangChain.
+
+Secure API Gateway routing via NestJS.
+
+The system is ready for deployment and can be fully interacted with using Postman or any API client. Check the .env-sample files in both directories to configure your API keys and local environment!
