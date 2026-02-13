@@ -46,3 +46,9 @@ graph TD
     AI_Service -->|Generate Answer| LLM
     
     Gateway -.->|Return Response| UI
+
+```
+
+The logic is finished; it is just necessary to deploy the servers (Nest and Python). You can test the RAG system using Postman or other similar tools to use the endpoints! 
+
+You can find all the info of the key in the .env-sample! 
